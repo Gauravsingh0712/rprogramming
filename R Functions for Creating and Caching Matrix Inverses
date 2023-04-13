@@ -1,0 +1,25 @@
+createCacheMatrix <- function(x = matrix(sample(1:100,9),3,3)) {
+  inversed <- NULL
+  setMatrix <- function(y) {
+    x <<- y
+    inversed <<- NULL
+  }
+  getMatrix <- function() x
+  setInverse <- function(solve) inversed <<- solve
+  getInverse <- function() inversed
+  list(setMatrix = setMatrix, getMatrix = getMatrix,
+       setInverse = setInverse,
+       getInverse = getInverse)
+}
+
+calculateInverse <- function(x, ...) {
+  inversed <- x$getInverse()
+  if(!is.null(inversed)) {
+    message("Getting the inverse matrix")
+    return(inversed)
+  }
+  data <- x$getMatrix()
+  inversed <- solve(data, ...)
+  x$setInverse(inversed)
+  inversed
+}
